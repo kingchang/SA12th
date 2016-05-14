@@ -1,10 +1,10 @@
-package com.hsdc.epro.control;
+package com.hsdc.epro.intf.control;
 
 
 /**
  * @author Ringle
  * @version 1.0
- * @created 30-¥|¤ë-2016 ¤U¤È 02:01:24
+ * @created 30-ï¿½|ï¿½ï¿½-2016 ï¿½Uï¿½ï¿½ 02:01:24
  */
 public interface GenerateRFPUco {
 

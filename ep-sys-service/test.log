@@ -1,0 +1,55 @@
+/*C2*/SET SCHEMA PUBLIC
+CONNECT USER SA
+CREATE TABLE Buyer\u000a(\u000a\u0009buyerID INTEGER NOT NULL,\u000a\u0009employeeID INTEGER \u0009,\u000a\u0009CONSTRAINT PK_Buyer PRIMARY KEY (buyerID)\u000a)\u000a
+\u000a\u000aCREATE TABLE Employee\u000a(\u000a\u0009employeeID INTEGER NOT NULL,\u000a\u0009CONSTRAINT PK_Employee PRIMARY KEY (employeeID)\u000a)\u000a
+\u000a\u000aCREATE TABLE Material\u000a(\u000a\u0009MaterialNumber VARCHAR(20) \u0009,\u000a\u0009materialID INTEGER NOT NULL,\u000a\u0009CONSTRAINT PK_Material PRIMARY KEY (materialID)\u000a)\u000a
+\u000a\u000aCREATE TABLE Organization\u000a(\u000a\u0009organizationID INTEGER NOT NULL,\u000a\u0009CONSTRAINT PK_Organization PRIMARY KEY (organizationID)\u000a)\u000a
+\u000a\u000aCREATE TABLE PurchaseRequisition\u000a(\u000a\u0009PRId int \u0009,\u000a\u0009PRDate DATE \u0009,\u000a\u0009purchaseRequisitionID INTEGER NOT NULL,\u000a\u0009buyerID INTEGER \u0009,\u000a\u0009supplierID INTEGER \u0009,\u000a\u0009CONSTRAINT PK_PurchaseRequisition PRIMARY KEY (purchaseRequisitionID)\u000a)\u000a
+\u000a\u000aCREATE TABLE PurchaseRequistionLineItem\u000a(\u000a\u0009UnitPrice Decimal(10,0) \u0009,\u000a\u0009Quantity Decimal(10,0) \u0009,\u000a\u0009purchaseRequistionLineItemID INTEGER NOT NULL,\u000a\u0009materialID INTEGER \u0009,\u000a\u0009purchaseRequisitionID INTEGER \u0009,\u000a\u0009CONSTRAINT PK_PurchaseRequistionLineItem PRIMARY KEY (purchaseRequistionLineItemID)\u000a)\u000a
+\u000a\u000aCREATE TABLE Supplier\u000a(\u000a\u0009supplierID INTEGER NOT NULL,\u000a\u0009organizationID INTEGER \u0009,\u000a\u0009realID VARCHAR(20),\u000a\u0009contactMobile VARCHAR(20),\u000a\u0009contactEmail VARCHAR(100),\u000a\u0009transactionLevel CHAR(1),\u000a\u0009CONSTRAINT PK_Supplier PRIMARY KEY (supplierID)\u000a)\u000a
+\u000a\u000aCREATE TABLE Supplier_Material\u000a(\u000a\u0009supplierID INTEGER NOT NULL,\u000a\u0009materialID INTEGER NOT NULL,\u000a\u0009CONSTRAINT PK_Supplier_Material PRIMARY KEY(supplierID, materialID)\u000a)\u000a
+\u000a\u000aCREATE TABLE SupplierQuotation\u000a(\u000a\u0009supplierQuotationID INTEGER NOT NULL,\u000a\u0009purchaseRequisitionID INTEGER \u0009,\u000a\u0009CONSTRAINT PK_SupplierQuotation PRIMARY KEY (supplierQuotationID)\u000a)\u000a
+\u000a\u000aCREATE TABLE SupplierQuotationLineItem\u000a(\u000a\u0009supplierQuotationLineItemID INTEGER NOT NULL,\u000a\u0009purchaseRequistionLineItemID INTEGER \u0009,\u000a\u0009supplierQuotationID INTEGER \u0009,\u000a\u0009CONSTRAINT PK_SupplierQuotationLineItem PRIMARY KEY (supplierQuotationLineItemID)\u000a)\u000a
+\u000a\u000aALTER TABLE Buyer \u000a ADD CONSTRAINT FK_Buyer_Employee\u000a\u0009FOREIGN KEY (employeeID) REFERENCES Employee (employeeID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE PurchaseRequisition \u000a ADD CONSTRAINT FK_PurchaseRequisition_Buyer\u000a\u0009FOREIGN KEY (buyerID) REFERENCES Buyer (buyerID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE PurchaseRequisition \u000a ADD CONSTRAINT FK_PurchaseRequisition_Supplier\u000a\u0009FOREIGN KEY (supplierID) REFERENCES Supplier (supplierID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE PurchaseRequistionLineItem \u000a ADD CONSTRAINT FK_PurchaseRequistionLineItem_Material\u000a\u0009FOREIGN KEY (materialID) REFERENCES Material (materialID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE PurchaseRequistionLineItem \u000a ADD CONSTRAINT FK_PurchaseRequistionLineItem_PurchaseRequisition\u000a\u0009FOREIGN KEY (purchaseRequisitionID) REFERENCES PurchaseRequisition (purchaseRequisitionID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE Supplier \u000a ADD CONSTRAINT FK_Supplier_Organization\u000a\u0009FOREIGN KEY (organizationID) REFERENCES Organization (organizationID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE SupplierQuotation \u000a ADD CONSTRAINT FK_SupplierQuotation_PurchaseRequisition\u000a\u0009FOREIGN KEY (purchaseRequisitionID) REFERENCES PurchaseRequisition (purchaseRequisitionID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE SupplierQuotationLineItem \u000a ADD CONSTRAINT FK_SupplierQuotationLineItem_PurchaseRequistionLineItem\u000a\u0009FOREIGN KEY (purchaseRequistionLineItemID) REFERENCES PurchaseRequistionLineItem (purchaseRequistionLineItemID) ON DELETE No Action ON UPDATE No Action\u000a
+\u000a\u000aALTER TABLE SupplierQuotationLineItem \u000a ADD CONSTRAINT FK_SupplierQuotationLineItem_SupplierQuotation\u000a\u0009FOREIGN KEY (supplierQuotationID) REFERENCES SupplierQuotation (supplierQuotationID) ON DELETE No Action ON UPDATE No Action\u000a
+INSERT INTO ORGANIZATION VALUES(1)
+INSERT INTO ORGANIZATION VALUES(2)
+INSERT INTO ORGANIZATION VALUES(3)
+INSERT INTO ORGANIZATION VALUES(4)
+INSERT INTO ORGANIZATION VALUES(5)
+INSERT INTO SUPPLIER VALUES(1,1,'A11022','0911111111','ringle@ringle.com','A')
+INSERT INTO SUPPLIER VALUES(2,2,'Q10010','0911111111','ringle@ringle.com','A')
+INSERT INTO SUPPLIER VALUES(3,3,'S01001','0911111111','ringle@ringle.com','A')
+INSERT INTO SUPPLIER VALUES(4,4,'S01101','0911111111','ringle@ringle.com','A')
+INSERT INTO SUPPLIER VALUES(5,5,'Z20011','0911111111','ringle@ringle.com','A')
+INSERT INTO MATERIAL VALUES('0100010',1)
+INSERT INTO SUPPLIER_MATERIAL VALUES(1,1)
+INSERT INTO SUPPLIER_MATERIAL VALUES(2,1)
+INSERT INTO SUPPLIER_MATERIAL VALUES(3,1)
+INSERT INTO SUPPLIER_MATERIAL VALUES(4,1)
+INSERT INTO SUPPLIER_MATERIAL VALUES(5,1)
+DISCONNECT
+/*C3*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT
+/*C4*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT
+/*C5*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT
+/*C6*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+CONNECT USER SA
+/*C8*/SET SCHEMA PUBLIC
+CONNECT USER SA
+DISCONNECT

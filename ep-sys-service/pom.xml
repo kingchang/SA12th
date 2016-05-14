@@ -31,6 +31,12 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
 		<dependency>
 			<groupId>com.hsdc.epsys</groupId>
 			<artifactId>ep-sys-intf</artifactId>
